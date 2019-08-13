@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.UserMapper">
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap id="UserMap" type="com.example.demo.pojo.User" >
+        <constructor >
+            <idArg column="id" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="userId" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="userName" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="password" jdbcType="VARCHAR" javaType="java.lang.String" />
+            <arg column="isLogin" jdbcType="BIT" javaType="java.lang.Boolean" />
+        </constructor>
+
+    </resultMap>
+    <sql id="User_Column_List" >
+        id, userId, userName, password, isLogin
+    </sql>
+
+    <select id="selectUserByUserName" parameterType="string" resultMap="UserMap">
+        select *
+        from UserInfo
+        where 1=1
+        and userName = #{userName,jdbcType=VARCHAR}
+    </select>
+
+</mapper>
