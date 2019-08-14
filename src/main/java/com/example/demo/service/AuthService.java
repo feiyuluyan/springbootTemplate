@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.pojo.User;
+import com.example.demo.vo.AuthVo;
 
 /**
  * Package： com.example.demo.service
@@ -13,5 +14,5 @@ public interface AuthService {
 
     User getUser(String userName);
 
-    String login(String userName, String password) throws Exception;
+    String login(AuthVo vo) throws Exception;
 }

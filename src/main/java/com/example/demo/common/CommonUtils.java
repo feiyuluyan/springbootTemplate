@@ -900,6 +900,53 @@ public class CommonUtils {
     }
 
 
+    /**
+     * 在一个字符串
+     * (0<=字符串长度<=10000，全部由字母组成)
+     * 中找到第一个只出现一次的字符,
+     * 并返回它的位置,
+     * 如果没有则返回 -1
+     * （需要区分大小写）
+     * @param str
+     * @return
+     */
+    public int FirstNotRepeatingChar(String str) {
+        int i = 0;
+        while(i<str.length() -1){
+            if(str.lastIndexOf(str.substring(i,i+1)) == i && str.indexOf(str.substring(i,i+1)) == i){return i;}
+            i++;
+        }
+        return -1;
+    }
+
+    /**
+     * 在数组中的两个数字，
+     * 如果前面一个数字大于后面的数字，
+     * 则这两个数字组成一个逆序对。
+     * 输入一个数组,求出这个数组中的逆序对的总数P。
+     * 并将P对1000000007取模的结果输出。
+     * 即输出P%1000000007
+     * @param array
+     * @return
+     */
+    public int InversePairs(int [] array) {
+        int p = 0;
+        int min = array.length > 0 ? array[0] : 0;
+        int max = 0;
+        for (int i =1;i<array.length;i++){
+            if(min > array[i]) {
+                p+= i;
+                min = array[i];
+            }
+            else if (max < array[i]){max = array[i];}
+            else {
+                for (int j = 0; j <i;j++){
+                    if(array[i] < array[j])p++;
+                }
+            }
+        }
+        return p%1000000007;
+    }
     @Test
     public void test(){
         int[] num= {1,4,7,23,6,8,4,5};

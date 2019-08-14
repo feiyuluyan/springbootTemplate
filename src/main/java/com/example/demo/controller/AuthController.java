@@ -2,11 +2,9 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.ServerResponse;
 import com.example.demo.service.AuthService;
+import com.example.demo.vo.AuthVo;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Package： com.example.demo.controller
@@ -23,9 +21,9 @@ public class AuthController {
     AuthService authService;
 
     @PostMapping(value="login")
-    public ServerResponse<String> login(@RequestParam String username, @RequestParam String password){
+    public ServerResponse<String> login(@RequestBody AuthVo vo){
         try{
-            String token = authService.login(username,password);
+            String token = authService.login(vo);
             return  new ServerResponse(200,"",token);
         }catch (Exception e){
             e.printStackTrace();
