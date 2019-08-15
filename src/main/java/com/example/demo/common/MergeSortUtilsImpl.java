@@ -1,8 +1,6 @@
 package com.example.demo.common;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Package： com.example.demo.common
@@ -34,7 +32,7 @@ public class MergeSortUtilsImpl {
         if (list.size() <= 1) return list;
         // 获取中点
         int mid = (list.size())/2 ;
-        // 讲数组划分为左右两部分
+        // 将数组划分为左右两部分
         // 要使用深度拷贝,防止缓存污染
         List<T> left = new ArrayList<T>(list.subList(0,mid));
         List<T> right = new ArrayList<T>(list.subList(mid,list.size()));

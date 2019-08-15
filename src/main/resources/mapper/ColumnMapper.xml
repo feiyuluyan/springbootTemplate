@@ -22,7 +22,7 @@
 
     <select id="getColumnByUserId" parameterType="string" resultMap="ColumnMap">
         select *
-        from ColumnInfo
+        from columninfo
         where 1=1
         and createUser = #{userId,jdbcType=VARCHAR}
     </select>

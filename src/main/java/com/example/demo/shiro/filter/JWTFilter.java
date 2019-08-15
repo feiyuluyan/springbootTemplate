@@ -1,5 +1,7 @@
-package com.example.demo.shiro;
+package com.example.demo.shiro.filter;
 
+import com.example.demo.shiro.JWTConstant;
+import com.example.demo.shiro.model.JWTToken;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 
 

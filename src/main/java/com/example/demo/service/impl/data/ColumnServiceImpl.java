@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 /**
  * Package： com.example.demo.service.impl.data
  * Author:  hujin
@@ -20,7 +22,7 @@ public class ColumnServiceImpl implements ColumnService{
     private ColumnMapper columnMapper;
 
     @Override
-    public Column getColumnByUserId(String userId){
+    public List<Column> getColumnByUserId(String userId){
         // 账户为空
         if(StringUtils.isEmpty(userId)){
             return null;

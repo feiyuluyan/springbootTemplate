@@ -6,10 +6,9 @@ import com.example.demo.service.data.ColumnService;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Package： com.example.demo.controller
@@ -25,8 +24,8 @@ public class ColumnController {
     @Autowired
     private ColumnService columnService;
 
-    @PostMapping(value="/getColumn")
-    public ServerResponse<Column> getColumn(@RequestParam String userId){
+    @PostMapping(value="/getColumn/{userId}")
+    public ServerResponse<List<Column>> getColumn(@PathVariable(name = "userId") String userId){
         return new ServerResponse<>(200,"",columnService.getColumnByUserId(userId));
     }
 }

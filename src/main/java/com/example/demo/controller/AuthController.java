@@ -20,7 +20,7 @@ public class AuthController {
     @Autowired
     AuthService authService;
 
-    @PostMapping(value="login")
+    @PostMapping(value="/login")
     public ServerResponse<String> login(@RequestBody AuthVo vo){
         try{
             String token = authService.login(vo);

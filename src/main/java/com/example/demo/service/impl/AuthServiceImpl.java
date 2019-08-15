@@ -3,13 +3,11 @@ package com.example.demo.service.impl;
 import com.example.demo.dao.UserMapper;
 import com.example.demo.pojo.User;
 import com.example.demo.service.AuthService;
-import com.example.demo.shiro.JWTUtil;
+import com.example.demo.shiro.utils.JWTUtil;
 import com.example.demo.vo.AuthVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
-import javax.annotation.Resource;
 
 /**
  * Package： com.example.demo.service.impl

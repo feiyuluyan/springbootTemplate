@@ -2,6 +2,8 @@ package com.example.demo.shiro;
 
 import com.example.demo.pojo.User;
 import com.example.demo.service.AuthService;
+import com.example.demo.shiro.model.JWTToken;
+import com.example.demo.shiro.utils.JWTUtil;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;

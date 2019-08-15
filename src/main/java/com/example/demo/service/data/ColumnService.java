@@ -2,6 +2,8 @@ package com.example.demo.service.data;
 
 import com.example.demo.pojo.Column;
 
+import java.util.List;
+
 /**
  * Package： com.example.demo.service.data
  * Author:  hujin
@@ -11,5 +13,5 @@ import com.example.demo.pojo.Column;
  */
 public interface ColumnService {
 
-    Column getColumnByUserId(String userId);
+    List<Column> getColumnByUserId(String userId);
 }

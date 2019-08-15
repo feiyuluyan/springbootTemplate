@@ -18,7 +18,7 @@
 
     <select id="selectUserByUserName" parameterType="string" resultMap="UserMap">
         select *
-        from UserInfo
+        from userinfo
         where 1=1
         and userName = #{userName,jdbcType=VARCHAR}
     </select>

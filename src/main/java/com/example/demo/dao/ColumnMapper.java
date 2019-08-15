@@ -4,6 +4,8 @@ import com.example.demo.pojo.Column;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Package： com.example.demo.dao
  * Author:  hujin
@@ -12,5 +14,5 @@ import org.springframework.stereotype.Component;
  * Version：
  */
 public interface ColumnMapper {
-    Column getColumnByUserId(String userId);
+    List<Column> getColumnByUserId(String userId);
 }
