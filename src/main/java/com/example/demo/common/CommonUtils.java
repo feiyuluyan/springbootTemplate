@@ -1,8 +1,8 @@
 package com.example.demo.common;
 
 
+import com.example.demo.common.algorithm.MergeSortUtilsImpl;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -310,19 +310,13 @@ public class CommonUtils {
      * @param n
      * @return
      */
-    public int NumberOf1(int n) {
-        int result = 0;
-        if (n > 0) {
-            int i =0;
-            while(n > 2<<i){
-                if (n% (2<<i) !=0) result++;
-            }
-        }else if (n == 0) return 0;
-        else {
-            // 负数 todo
-            return 0;
+    public static int NumberOf1(int n) {
+        int count = 0;
+        while (n != 0) {
+            ++count;
+            n = (n - 1) & n;
         }
-        return 0;
+        return count;
     }
 
     /**
@@ -333,16 +327,22 @@ public class CommonUtils {
      * @return
      */
     public double Power(double base, int exponent) throws Exception {
-        double result = 1;
+        double result = 1,curr = base;
         if (exponent < 0) {
             if (base == 0) throw new Exception("can't be zero");
             exponent = -exponent;
-        }else if(exponent == 0) return 1;
-
-        while (exponent> 0) {
-
         }
-        return 0;
+        if(exponent==0){
+            return 1;
+        }
+        while(exponent!=0){
+            if((exponent&1)==1){
+                result*=curr;
+            }
+            curr*=curr;
+            exponent=exponent >> 1;
+        }
+        return exponent > 0? result :(1/result);
     }
 
 
@@ -927,7 +927,7 @@ public class CommonUtils {
      * 并将P对1000000007取模的结果输出。
      * 即输出P%1000000007
      * @param array
-     * @return
+     * @return  todo
      */
     public int InversePairs(int [] array) {
         int p = 0;
@@ -947,6 +947,216 @@ public class CommonUtils {
         }
         return p%1000000007;
     }
+
+    /**
+     * 找出所有和为S的连续正数序列
+     * @param sum
+     * @return
+     */
+    public ArrayList<ArrayList<Integer> > FindContinuousSequence(int sum) {
+        ArrayList<ArrayList<Integer> > result = new ArrayList<>();
+        int plow = 1,phigh = 2;
+        while(phigh > plow){
+            int cur = (phigh + plow) * (phigh - plow + 1) / 2;
+            if(cur == sum){
+                ArrayList<Integer> list = new ArrayList<>();
+                for(int i=plow;i<=phigh;i++){
+                    list.add(i);
+                }
+                result.add(list);
+                plow++;
+            }else if(cur < sum){
+                phigh++;
+            }else{
+                plow++;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 输入一个递增排序的数组和一个数字S，
+     * 在数组中查找两个数，使得他们的和正好是S，
+     * 如果有多对数字的和等于S，输出两个数的乘积最小的
+     * @param array
+     * @param sum
+     * @return
+     */
+    public ArrayList<Integer> FindNumbersWithSum(int [] array,int sum) {
+        ArrayList<Integer> result = new ArrayList<>();
+        int plow = 0,phigh = array.length - 1;
+        while(plow<phigh){
+            if(array[plow] + array[phigh] == sum) {
+                result.add(array[plow]);
+                result.add(array[phigh]);
+                return result;
+            }else if(array[plow] + array[phigh] > sum) {
+                phigh--;
+            }else {
+                plow++;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 汇编语言中有一种移位指令叫做循环左移（ROL），
+     * 现在有个简单的任务，
+     * 就是用字符串模拟这个指令的运算结果。
+     * 对于一个给定的字符序列S，
+     * 请你把其循环左移K位后的序列输出。
+     * 例如，字符序列S=”abcXYZdef”,
+     * 要求输出循环左移3位后的结果，
+     * 即“XYZdefabc”。是
+     * 不是很简单？OK，搞定它！
+     * @param str
+     * @param n
+     * @return
+     */
+    public String LeftRotateString(String str,int n) {
+        if(n>str.length())return "";
+        return str.substring(n) + str.substring(0,n);
+    }
+
+    /**
+     * 牛客最近来了一个新员工Fish，
+     * 每天早晨总是会拿着一本英文杂志，
+     * 写些句子在本子上。
+     * 同事Cat对Fish写的内容颇感兴趣，
+     * 有一天他向Fish借来翻看，
+     * 但却读不懂它的意思。例
+     * 如，“student. a am I”。
+     * 后来才意识到，
+     * 这家伙原来把句子单词的顺序翻转了，
+     * 正确的句子应该是“I am a student.”。
+     * Cat对一一的翻转这些单词顺序可不在行，你能帮助他么？
+     * @param str
+     * @return
+     */
+    public String ReverseSentence(String str) {
+        if(str.length() == 0)return "";
+        String[] result = str.split(" ");
+        if(result.length == 0)return str;
+        StringBuilder rs = new StringBuilder();
+        for (int i =result.length -1 ;i>=0;i--){
+            rs.append(result[i]).append(" ");
+        }
+        return rs.toString().substring(0,rs.toString().length()-1);
+    }
+
+    /**
+     * LL今天心情特别好,
+     * 因为他去买了一副扑克牌,
+     * 发现里面居然有2个大王,
+     * 2个小王(一副牌原本是54张^_^)
+     * ...他随机从中抽出了5张牌,
+     * 想测测自己的手气,
+     * 看看能不能抽到顺子,
+     * 如果抽到的话,
+     * 他决定去买体育彩票,嘿嘿！！
+     * “红心A,黑桃3,小王,大王,方片5”,
+     * “Oh My God!”
+     * 不是顺子.....
+     * LL不高兴了,他想了想,
+     * 决定大\小 王可以看成任何数字,
+     * 并且A看作1,J为11,Q为12,K为13。
+     * 上面的5张牌就可以变成
+     * “1,2,3,4,5”(大小王分别看作2和4),“So Lucky!”。
+     * LL决定去买体育彩票啦。
+     * 现在,要求你使用这幅牌模拟上面的过程,
+     * 然后告诉我们LL的运气如何，
+     * 如果牌能组成顺子就输出true，
+     * 否则就输出false。
+     * 为了方便起见,你可以认为大小王是0。
+     * @param numbers
+     * @return
+     */
+    public boolean isContinuous(int [] numbers) {
+        if (numbers.length != 5) return false;
+        int min = 14;
+        int max = -1;
+        int flag = 0;
+        for (int i = 0; i < numbers.length; i++) {
+            int number = numbers[i];
+            if (number < 0 || number > 13) return false;
+            if (number == 0) continue;
+            if (((flag >> number) & 1) == 1) return false;
+            flag |= (1 << number);
+            if (number > max) max = number;
+            if (number < min) min = number;
+        }
+        if (max - min >= 5) return false;
+        return true;
+    }
+
+
+    /**
+     * 每年六一儿童节,牛客都会准备一些小礼物去看望孤儿院的小朋友,今年亦是如此。
+     * HF作为牛客的资深元老,自然也准备了一些小游戏。
+     * 其中,有个游戏是这样的:首先,让小朋友们围成一个大圈。
+     * 然后,他随机指定一个数m,让编号为0的小朋友开始报数。
+     * 每次喊到m-1的那个小朋友要出列唱首歌,然后可以在礼品箱中任意的挑选礼物,
+     * 并且不再回到圈中,从他的下一个小朋友开始,继续0...m-1报数....这样下去....直到剩下最后一个小朋友,
+     * 可以不用表演,并且拿到牛客名贵的“名侦探柯南”典藏版(名额有限哦!!^_^)。
+     * 请你试着想下,哪个小朋友会得到这份礼品呢？(注：小朋友的编号是从0到n-1)
+     * @param n
+     * @param m
+     * @return
+     * 思路 递归
+     * 反向思考
+     */
+    public int LastRemaining_Solution(int n, int m) {
+        if(n == 0 ) return -1;
+        if(n == 0) return 0;
+        else {
+            return LastRemaining_Solution(n-1,m)%n;
+        }
+    }
+
+    /**
+     * 求1+2+3+...+n，
+     * 要求不能使用乘除法、for、while、if、else、switch、case等关键字及条件判断语句（A?B:C）。
+     * @param n
+     * @return
+     */
+    public int Sum_Solution(int n) {
+        int result = n;
+        boolean a = result>0 && (result += Sum_Solution(n-1))>0;
+        return  result;
+    }
+    /**
+     * 获取输入字的质数集
+     * 比如180  得到 2 2 3 3 5
+     * @param n
+     */
+    private static int[] primeList = {};
+    public  void getNum (int n) {
+        if (n <= 1) {
+            return;
+        }
+        int i = 2;
+        while (i<=n) {
+            int len =primeList.length;
+            if(n%i == 0) {
+                n = n/i;
+                if(len == 0 || primeList[len-1] < i){
+                    primeList[len] = i;
+                }
+            }else {
+                if (len > 0 || primeList[len-1] > i){
+                    for (int index = 0;index < len-1; index++) {
+                        if(i == primeList[index]) {
+                            i = primeList[index+1];
+                        }
+                    }
+                }else {
+                    i ++;
+                }
+            }
+        }
+    }
+
+
     @Test
     public void test(){
         int[] num= {1,4,7,23,6,8,4,5};

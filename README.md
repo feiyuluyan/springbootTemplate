@@ -17,7 +17,7 @@
  - [shiro jwt + token相关](./src/main/java/com/example/demo/shiro)
  - [utils工具类](./src/main/java/com/example/demo/utils)
  - [牛客网一些试题函数](./src/main/java/com/example/demo/common/CommonUtils.java)
- - [并归排序算法实现以及优化](./src/main/java/com/example/demo/common/MergeSortUtilsImpl.java)
+ - [并归排序算法实现以及优化](./src/main/java/com/example/demo/common/algorithm/MergeSortUtilsImpl.java)
  - [组装完全二叉树并实现前中后序遍历](./src/main/java/com/example/demo/common/TreeNode.java)
  - [spring配置相关](./src/main/resources/application.yml)
  - [pom.xml](./pom.xml)

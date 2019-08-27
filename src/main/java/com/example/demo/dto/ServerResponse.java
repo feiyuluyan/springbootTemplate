@@ -23,6 +23,7 @@ public class ServerResponse<T> {
 
     // 重载
     public  ServerResponse() {
+        super();
     }
 
     public ServerResponse(Integer code ,String msg, T data) {
