@@ -1,5 +1,7 @@
 package com.example.demo.common.algorithm;
 
+import org.springframework.stereotype.Component;
+
 import java.util.*;
 
 /**
@@ -13,6 +15,7 @@ import java.util.*;
  * 然后将这两个有序数组归并为一个数组
  * Version：
  */
+@Component
 public class MergeSortUtilsImpl {
 
     /**

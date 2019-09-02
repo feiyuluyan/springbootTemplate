@@ -1164,4 +1164,42 @@ public class CommonUtils {
         MergeSortUtilsImpl.mergeSort4(list);
         System.out.println(list);
     }
+
+
+    public static void main(String[] args){
+        int a = 123;
+        StringBuilder s = new StringBuilder();
+        int i = numberOfLeadingZeros(a) - 1;
+        while(i >= 0) {
+            s.append(a>>i & 1);
+            i--;
+        }
+        System.out.println(s);
+
+    }
+
+
+    public static int numberOfLeadingZeros(int i) {
+        // HD, Figure 5-6
+//        if (i == 0)
+//            return 32;
+//        int n = 1;
+//        if (i >>> 16 == 0) { n += 16; i <<= 16; }
+//        if (i >>> 24 == 0) { n +=  8; i <<=  8; }
+//        if (i >>> 28 == 0) { n +=  4; i <<=  4; }
+//        if (i >>> 30 == 0) { n +=  2; i <<=  2; }
+//        if (i >>> 31 == 0) { n +=  1; i <<=  1; }
+//        n -= i >>> 31;
+//        return n;
+        if(i == 0) return 0;
+        int n = 1;
+        if(i >>> 16 != 0) {n += 16; i >>= 16;}
+        if(i >>> 8 != 0) {n += 8; i >>= 8;}
+        if(i >>> 4 != 0) {n += 4; i >>= 4;}
+        if(i >>> 2 != 0) {n += 2; i >>= 2;}
+        return n + (i >>> 1);
+
+    }
+
+
 }

@@ -78,7 +78,7 @@ public class FileCompareUtil {
         for(MultipartFile file : files){
             if(!CommonUtil.isEmpty(file)) {
                 // 存储文件
-                String path = "D:\\logs\\data\\" + file.getOriginalFilename();
+                String path = "/logs/data/" + file.getOriginalFilename();
                 File savePathDir = new File(path);
                 if(!savePathDir.exists()){
                     savePathDir.mkdirs();
@@ -114,7 +114,7 @@ public class FileCompareUtil {
                         flag = m;
                     }
                 }
-                String 	savePath = "D:\\logs\\result\\"+contentList.get(i).get("name")+"---"+contentList.get(j).get("name")+"  result.txt";
+                String 	savePath = "/logs/result/"+contentList.get(i).get("name")+"---"+contentList.get(j).get("name")+"  result.txt";
                 String path=savePath;
                 File file = new File(savePath);
                 if (!file.getParentFile().exists()) {
@@ -133,23 +133,24 @@ public class FileCompareUtil {
                 fileList.add(file);
             }
         }
-        String outPath =  "D:\\logs\\zip\\"+ zipName+".zip";
-        File fileDirs = new File("\\logs\\zip");
+        String outPath =  "/usr/hujin/github/front/dist/static/temp/";
+        String fileName = outPath + zipName+".zip";
+        File fileDirs = new File(outPath);
         if(!fileDirs.exists()){
             fileDirs.mkdirs();
         }
-        File fileDir = new File(outPath);
+        File fileDir = new File(fileName);
         if(!fileDir.exists()){
             fileDir.createNewFile();
         }
         FileOutputStream fos = new FileOutputStream(
-                outPath);
+                fileName);
         ZipOutputStream zipOut = new ZipOutputStream(fos);
 
         ZipUtil.zipFile(fileList,zipName, zipOut);
         zipOut.close();
         fos.close();
-        uploadService.upLoadZip(fileDir);
-        return outPath;
+        // uploadService.upLoadZip(fileDir);
+        return zipName+".zip";
     }
 }
