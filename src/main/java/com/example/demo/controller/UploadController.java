@@ -2,6 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.ServerResponse;
 import com.example.demo.utils.FileCompareUtil;
+import com.example.demo.utils.IPUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/common")
+@Slf4j
 public class UploadController {
 
 
@@ -40,14 +43,15 @@ public class UploadController {
             MultipartHttpServletRequest multipartRequest = resolver.resolveMultipart(request);
             List<MultipartFile> files = multipartRequest
                     .getFiles("file");
+            log.info("对比文件数量: " + files.size());
             if(files.size()>1){
-                return new ServerResponse<>(200,"",fileCompareUtil.fileCompare(files));
+                return new ServerResponse<>(200,"success",fileCompareUtil.fileCompare(files));
             }else {
-                return new ServerResponse<>(-1,"",null);
+                return new ServerResponse<>(-1,"一个文件无法对比",null);
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return new ServerResponse<>(-1,"",null);
+            return new ServerResponse<>(-1,"服务器异常",null);
         }
     }
 }

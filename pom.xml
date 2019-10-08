@@ -118,6 +118,18 @@
             <version>RELEASE</version>
         </dependency>
 
+		<!--第三方支付对接全能支付Java开发工具包-->
+		<dependency>
+			<groupId>com.egzosn</groupId>
+			<artifactId>pay-java-ali</artifactId>
+			<version>2.12.8</version>
+		</dependency>
+		<dependency>
+			<groupId>com.egzosn</groupId>
+			<artifactId>pay-java-common</artifactId>
+			<version>2.12.8</version>
+		</dependency>
+
     </dependencies>
 
 	<build>

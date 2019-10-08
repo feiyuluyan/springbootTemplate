@@ -4,7 +4,9 @@ import com.example.demo.dao.UserMapper;
 import com.example.demo.pojo.User;
 import com.example.demo.service.AuthService;
 import com.example.demo.shiro.utils.JWTUtil;
+import com.example.demo.utils.IPUtil;
 import com.example.demo.vo.AuthVo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -17,6 +19,7 @@ import org.springframework.util.StringUtils;
  * Version：
  */
 @Service
+@Slf4j
 public class AuthServiceImpl implements AuthService {
 
     @Autowired
@@ -47,6 +50,7 @@ public class AuthServiceImpl implements AuthService {
         if (!vo.getPassword().toUpperCase().equals(user.getPassword())) {
             throw new Exception("账号或密码错误！");
         }
+        log.info(vo.getUsername()+"登录, ip地址："+ IPUtil.getIpaddress());
         return JWTUtil.getToken(vo.getUsername(),vo.getPassword());
     }
 }

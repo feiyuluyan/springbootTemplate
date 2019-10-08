@@ -2,8 +2,12 @@ package com.example.demo.common;
 
 
 import com.example.demo.common.algorithm.MergeSortUtilsImpl;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.junit.jupiter.api.Test;
+import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -1044,6 +1048,11 @@ public class CommonUtils {
         return rs.toString().substring(0,rs.toString().length()-1);
     }
 
+    @Test
+    public void testStudent(){
+        System.out.println(ReverseSentence("It's a dog!"));
+    }
+
     /**
      * LL今天心情特别好,
      * 因为他去买了一副扑克牌,
@@ -1166,7 +1175,7 @@ public class CommonUtils {
     }
 
 
-    public static void main(String[] args){
+    public static void main1(String[] args){
         int a = 123;
         StringBuilder s = new StringBuilder();
         int i = numberOfLeadingZeros(a) - 1;
@@ -1178,6 +1187,123 @@ public class CommonUtils {
 
     }
 
+    public int findKthLargest(int[] nums, int k) {
+        for (int i = 1 ;i< nums.length; i += i) {
+            for (int j =0; i+j< nums.length; j+=2*i) {
+                int left = j,mid = i + j,right = j+2*i;
+                if (right > nums.length) right = nums.length;
+                int[] lefts = new int[mid-left];
+                int[] rights = new int[right-mid];
+                System.arraycopy(nums, left, lefts, 0,mid-left);
+                System.arraycopy(nums, mid, rights, 0,right-mid);
+
+                int m =0,n=0;
+                for (int index = left;index < right; index ++) {
+                    if(m>= lefts.length){
+                        nums[index] = rights[n++];
+                        continue;
+                    }
+                    if (n>= rights.length) {
+                        nums[index] = lefts[m++];
+                        continue;
+                    }
+                    if (lefts[m] < rights[n]) {
+                        nums[index] = lefts[m++];
+                    } else {
+                        nums[index] = rights[n++];
+                    }
+                }
+            }
+        }
+        return nums[nums.length - k];
+    }
+
+    /**
+     * Definition for a binary tree node.
+     * public class TreeNode {
+     *     int val;
+     *     TreeNode left;
+     *     TreeNode right;
+     *     TreeNode(int x) { val = x; }
+     * }
+     */
+    // 递归
+    public int maxDepth(TreeNode root) {
+        if (root != null) {
+            return getDeep(root) +1;
+        }
+        return 0;
+    }
+
+    private int getDeep(TreeNode root){
+        int left = 0,right=0;
+        if (root.left != null) {
+            left += maxDepth(root.left);
+            left ++;
+        }
+        if (root.right != null) {
+            right +=maxDepth(root.right);
+            right ++;
+        }
+        return left < right? right :left;
+    }
+
+    public void setZeroes(int[][] matrix) {
+        if (matrix.length == 0) return;
+        List<Integer> x = new ArrayList<Integer>();
+        List<Integer> y = new ArrayList<Integer>();
+        for (int i = 0;i < matrix.length;i ++) {
+            for(int j =0; j <matrix[i].length; j ++) {
+                if (matrix[i][j] == 0) {
+                    x.add(i);
+                    y.add(j);
+                }
+            }
+        }
+        for (int i = 0;i < matrix.length;i ++) {
+            for(int j =0; j <matrix[i].length; j ++) {
+                if (x.contains(i) || y.contains(j)) matrix[i][j] = 0;
+            }
+        }
+    }
+
+    public int maxPoints(int[][] points) {
+        if (points.length == 1) return 1;
+        int count = 0;
+        Map<String,Set<int[]>> map = new HashMap<>();
+        for (int i=0;i< points.length;i++){
+            for (int j = i + 1;j<points.length;j++) {
+                double k=0,b=0;
+                String kb = "";
+                if ((points[i][0] - points[j][0]) == 0) {
+                    kb = "x=" + points[i][0];
+                } else {
+                    k = (Double.valueOf(points[i][1] - points[j][1])) / (points[i][0] - points[j][0]);
+                    b = points[j][1] - points[j][0] * k;
+                    kb = "y=" + k + "x+" + b;
+                }
+                if (map.get(kb) != null) {
+                    Set<int[]> set= map.get(kb);
+                    set.add(points[i]);
+                    set.add(points[j]);
+                    map.put(kb, set);
+                }else {
+                    Set<int[]> set= new HashSet<>();
+                    set.add(points[i]);
+                    set.add(points[j]);
+                    map.put(kb,set);
+                }
+                count = count < map.get(kb).size() ? map.get(kb).size() : count;
+            }
+        }
+        return count;
+    }
+
+    @Test
+    public void tes () {
+       int[][]  a =  {{560,248},{0,16},{30,250},{950,187},{630,277},{950,187},{-212,-268},{-287,-222},{53,37},{-280,-100},{-1,-14},{-5,4},{-35,-387},{-95,11},{-70,-13},{-700,-274},{-95,11},{-2,-33},{3,62},{-4,-47},{106,98},{-7,-65},{-8,-71},{-8,-147},{5,5},{-5,-90},{-420,-158},{-420,-158},{-350,-129},{-475,-53},{-4,-47},{-380,-37},{0,-24},{35,299},{-8,-71},{-2,-6},{8,25},{6,13},{-106,-146},{53,37},{-7,-128},{-5,-1},{-318,-390},{-15,-191},{-665,-85},{318,342},{7,138},{-570,-69},{-9,-4},{0,-9},{1,-7},{-51,23},{4,1},{-7,5},{-280,-100},{700,306},{0,-23},{-7,-4},{-246,-184},{350,161},{-424,-512},{35,299},{0,-24},{-140,-42},{-760,-101},{-9,-9},{140,74},{-285,-21},{-350,-129},{-6,9},{-630,-245},{700,306},{1,-17},{0,16},{-70,-13},{1,24},{-328,-260},{-34,26},{7,-5},{-371,-451},{-570,-69},{0,27},{-7,-65},{-9,-166},{-475,-53},{-68,20},{210,103},{700,306},{7,-6},{-3,-52},{-106,-146},{560,248},{10,6},{6,119},{0,2},{-41,6},{7,19},{30,250}};
+       System.out.println(maxPoints(a));
+    }
 
     public static int numberOfLeadingZeros(int i) {
         // HD, Figure 5-6
@@ -1201,5 +1327,187 @@ public class CommonUtils {
 
     }
 
+    /**
+     * 给你一个字符串 s 和一个字符规律 p，请你来实现一个支持 '.' 和 '*' 的正则表达式匹配。
+     * '.' 匹配任意单个字符
+     * '*' 匹配零个或多个前面的那一个元素
+     * @param s
+     * @param p
+     * @return
+     */
+    public boolean isMatch(String s, String p) {
+        boolean isMatch  = false;
+        if (StringUtils.isEmpty(s) || StringUtils.isEmpty(p)) return isMatch;
 
+
+        return isMatch;
+
+    }
+
+
+    //测试类
+    @Test
+    public void testa() {
+        System.out.println(getLongStr(" 1 3 4"));
+    }
+    public String getLongStr (String str) {
+        char[] chars = str.toCharArray();
+        String result = "";
+        String data = "";
+        Map<Character, Integer> map = new HashMap<>();
+
+        if (str.length() == 1) return str;
+        for (int i = 1; i < str.length(); i++) {
+            map.put(chars[i],i);
+            int index = result.indexOf(chars[i]);
+            if (result.equals("")) result += chars[0];
+            if (map.containsKey(chars[i]))
+                result += chars[i];
+            else {
+                data = data.length() < result.length() ? result: data;
+                result = result.substring(map.get(chars[i]) + 1) + chars[i];
+            }
+        }
+        return data;
+    }
+
+
+    private static BigDecimal H = new BigDecimal(0); // 实时总金额
+
+    private static int n = 0;  // 剩余人数
+
+    private static BigDecimal count =new  BigDecimal(0);
+
+    private static  BigDecimal  m =new  BigDecimal(0);  // 平均金额
+
+    private static BigDecimal sum = new  BigDecimal(0); // 统计偏移量
+
+    // 获取红包金额
+    public BigDecimal getMoney(BigDecimal p) {
+        if (H.intValue() < 0 || n <= 0) {
+            throw new UnknownAccountException("红包已经抢光了！");
+        }
+        if (m.intValue() == 0) m = new BigDecimal(H.doubleValue() / n).setScale(2, BigDecimal.ROUND_HALF_UP); // 平均金额
+        BigDecimal random;
+        BigDecimal max = sum.intValue() <=0 ?  p: p.subtract(sum);
+        BigDecimal min = sum.intValue() <=0 ? new BigDecimal("0").subtract(p).subtract(sum) : new BigDecimal("0").subtract(p);
+        if (n == 1) random = new BigDecimal("0").subtract(sum);
+        else random = new BigDecimal(Math.random()).setScale(2, BigDecimal.ROUND_HALF_UP).multiply(max.subtract(min)).add(min);
+        sum  = sum.add(random);
+        BigDecimal data = m.multiply(random).add(m).setScale(2, BigDecimal.ROUND_HALF_UP);  // 计算红包金额
+        H  = H.subtract(data); // 扣除总金额
+        n--;  // 人数减一
+        count = count.add(data);
+        return data;
+    }
+
+    //测试类
+    @Test
+    public void testGetMoney () {
+
+        BigDecimal a  = new BigDecimal(100);
+        int b = 3;
+        H = a;
+        n = b;
+        for (int i = 0;i<b;i++){
+            System.out.println(this.getMoney(new BigDecimal("0.1")));
+        }
+        System.out.println(count);
+    }
+
+
+
+    //测试类
+    @Test
+    public void testD () {
+     C c = new C();
+    }
+
+    static{
+        int x=5;
+    }
+    static int x,y;
+    public static void main(String args[]){
+        x--;
+        myMethod( );
+        System.out.println(x+y+ ++x);
+    }
+    public static void myMethod( ){
+        y=x++ + ++x;
+    }
+
+
+    /**
+     * 有1分，2分，5分，10分四种硬币，每种硬币数量无限，给定n分钱(n <= 100000)，
+     * 有多少中组合可以组成n分钱？
+     * 1  1
+     * 2  2
+     * 3  2
+     * 4  3
+     * 5  5
+     */
+    static int countx = 0;
+    public  void solute (int[] coin, int index,  int n){
+        if (n == 0) {
+            countx++;
+        }
+        if (n < 0) return;
+        for (int i =index ;i<4;i++){
+            solute(coin, i, n - coin[i]);
+        }
+    }
+
+    //测试类
+    @Test
+    public void test1D () {
+        int[]  coin= {1,2,5,10};
+        int tag = 0;
+        int n = 13;
+        solute(coin,0,n);
+        System.out.println(countx);
+    }
+
+
+    @Test
+    public void testTime () {
+        Date date = new Date();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar calendar =Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, 99);
+        System.out.println(sdf.format(calendar.getTime()));
+    }
+
+
+
+}
+
+
+class C extends  B {
+    private D d = new D("d1");
+    private  D d2 = new D("d2");
+    static {
+        System.out.println("static : c");
+    }
+    public C (){
+        System.out.println("c");
+    }
+}
+class B{
+    static {
+        System.out.println("static : b");
+    }
+    public B () {
+         System.out.println("b");
+    }
+}
+class D{
+    static {
+        System.out.println("static : d");
+    }
+    String d;
+    public D (String str) {
+        d = str;
+        System.out.println(d);
+    }
 }

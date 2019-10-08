@@ -24,10 +24,10 @@ public class AuthController {
     public ServerResponse<String> login(@RequestBody AuthVo vo){
         try{
             String token = authService.login(vo);
-            return  new ServerResponse(200,"",token);
+            return  new ServerResponse(200,"登录成功！",token);
         }catch (Exception e){
             e.printStackTrace();
-            return new ServerResponse(-1,"","");
+            return new ServerResponse(-1,e.getMessage(),"");
         }
     }
 }

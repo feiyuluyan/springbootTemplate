@@ -7,9 +7,9 @@ spring:
       max-request-size: 500MB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/mysql?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
+    url: jdbc:mysql://106.15.234.81:3306/mysql?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
     username: root
-    password: 123456
+    password: root
 #port
 server:
   port: 8088
@@ -17,3 +17,18 @@ mybatis:
   #config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.example.demo.pojo
+
+ftp:
+  ip: 106.15.234.81
+  port: 221
+  username: ftpuser
+  password: ftppassword
+  path: /springboot/
+  httpPath: http://106.15.234.81:8080/files
+
+storage:
+  absolutePath: /home/samba/springboot/
+  httpPath: http://106.15.234.81:8080/EquipFile/
+
+switch:
+  useFtp: 0
